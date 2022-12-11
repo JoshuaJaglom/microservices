@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 from router import router
 from fastapi.middleware.cors import CORSMiddleware
-
+from auth_service.router import router as auth_router
 from deps import init_tracer
 from prometheus_fastapi_instrumentator import Instrumentator
 
@@ -31,11 +31,12 @@ async def shutdown():
     mongoengine.disconnect(alias=DB_NAME)
 
 
-app.include_router(router, prefix='/v1')
-
-
 @app.get('/_health')
 async def health_check():
     return {
         'status': 'Ok'
     }
+
+
+app.include_router(router, prefix='/v1')
+app.include_router(auth_router, prefix='/v1')

@@ -57,7 +57,20 @@
             "collection": "users"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "auth/validator": {
+          "alg": "HS256",
+          "roles": [
+            "user",
+            "admin"
+          ],
+          "roles_key": "roles",
+          "jwk_local_path": "jwk_private_key.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        }
+      }
     },
     {
       "endpoint": "/v1/user_menu",
@@ -86,6 +99,30 @@
           }
         }
       ]
+    },
+     {
+      "endpoint": "/v1/login",
+      "method":  "POST",
+      "backend": [
+        {
+          "url_pattern": "/v1/login",
+          "encoding": "safejson",
+          "host": [
+              "http://authorization_service:8000"
+          ]
+        }
+      ],
+      "extra_config": {
+        "auth/signer": {
+          "alg": "HS256",
+          "jwk_local_path": "jwk_private_key.json",
+          "keys_to_sign": ["access_token"],
+          "disable_jwk_security": true,
+          "full": false,
+          "kid": "sim2"
+        }
+      }
     }
+
   ]
 }

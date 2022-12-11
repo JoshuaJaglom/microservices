@@ -61,11 +61,6 @@
       "extra_config": {
         "auth/validator": {
           "alg": "HS256",
-          "roles": [
-            "user",
-            "admin"
-          ],
-          "roles_key": "roles",
           "jwk_local_path": "jwk_private_key.json",
           "disable_jwk_security": true,
           "operation_debug": true

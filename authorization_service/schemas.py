@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class PostUser(BaseModel):
     name: str
-    login: str
+    email: str
     password: str
 
 

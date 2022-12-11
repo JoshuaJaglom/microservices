@@ -9,5 +9,5 @@ class User(mongoengine.Document):
 
     user_id = mongoengine.UUIDField(primary_key=True)
     name = mongoengine.StringField(max_length=40, required=True)
-    login = mongoengine.StringField(max_length=30, required=True)
+    email = mongoengine.StringField(max_length=30, required=True)
     password = mongoengine.StringField(max_length=30, required=True)

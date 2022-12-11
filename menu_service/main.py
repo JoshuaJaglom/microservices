@@ -1,5 +1,7 @@
 import mongoengine
 from fastapi import FastAPI
+
+from deps import init_tracer
 from router import router
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,6 +23,7 @@ app.add_middleware(
 async def startup():
     mongoengine.connect(host=f"mongodb://mongo_menu:27017/{DB_NAME}", alias=DB_NAME)
     Instrumentator().instrument(app).expose(app)
+    init_tracer()
 
 
 @app.on_event("shutdown")

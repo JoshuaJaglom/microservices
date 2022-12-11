@@ -8,6 +8,8 @@ services:
       - "8001:8000"
     volumes:
       - ./authorization_service:/code
+    environment:
+      - JAEGER_AGENT_HOST=jaeger-all-in-one
 
   healthcheck_service:
     container_name: health_check_service
@@ -20,6 +22,8 @@ services:
       - "8002:8000"
     volumes:
       - ./menu_service:/code
+    environment:
+      - JAEGER_AGENT_HOST=jaeger-all-in-one
 
   krakenD:
     image: devopsfaith/krakend:watch
@@ -71,3 +75,20 @@ services:
       - ~/grafana:/var/lib/grafana
     ports:
       - "3000:3000"
+
+  jaeger-all-in-one:
+    container_name: jaeger
+    image: jaegertracing/all-in-one
+    environment:
+      - JAEGER_DISABLED=false
+    expose:
+      - "16686"
+      - "6831/udp"
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"

@@ -1,8 +1,10 @@
 import mongoengine
 from fastapi import FastAPI
+
 from router import router
 from fastapi.middleware.cors import CORSMiddleware
 
+from deps import init_tracer
 from prometheus_fastapi_instrumentator import Instrumentator
 
 DB_NAME = 'mydb'
@@ -21,6 +23,7 @@ app.add_middleware(
 async def startup():
     mongoengine.connect(host=f"mongodb://mongo_users:27017/{DB_NAME}", alias=DB_NAME)
     Instrumentator().instrument(app).expose(app)
+    init_tracer()
 
 
 @app.on_event("shutdown")

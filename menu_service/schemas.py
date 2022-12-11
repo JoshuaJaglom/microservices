@@ -1,19 +1,13 @@
+import uuid
+
 from pydantic import BaseModel
 
 
-class PostMenu(BaseModel):
+class PostProduct(BaseModel):
     product: str
     price: int
 
 
-class Menu(PostMenu):
-    id: int
+class Product(PostProduct):
+    product_id: uuid.UUID
 
-# class PostProduct(BaseModel):
-#     name: str
-#     price: int
-#     description: str
-#
-#
-# class Product(PostProduct):
-#     id: int

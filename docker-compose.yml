@@ -6,12 +6,16 @@ services:
     build: ./authorization_service
     ports:
       - "8001:8000"
+    volumes:
+      - ./authorization_service:/code
 
   menu_service:
     container_name: menu_service
     build: ./menu_service
     ports:
       - "8002:8000"
+    volumes:
+      - ./menu_service:/code
 
   krakenD:
     image: devopsfaith/krakend:watch
@@ -25,13 +29,13 @@ services:
       - authorization_service
       - menu_service
 
-#  mongo_menu:
-#    container_name: mongo_product
-#    image: bitnami/mongodb
-#    ports:
-#      - "27017:27017"
-#    volumes:
-#      - ~/apps/mongo:/data/db
+  mongo_menu:
+    container_name: mongo_menu
+    image: bitnami/mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/apps/mongo:/data/db
 
   mongo_users:
     container_name: mongo_user

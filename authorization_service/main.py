@@ -27,3 +27,10 @@ async def shutdown():
 
 
 app.include_router(router, prefix='/v1')
+
+
+@app.get('/_health')
+async def health_check():
+    return {
+        'status': 'Ok'
+    }

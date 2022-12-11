@@ -33,7 +33,7 @@ async def add_new_user(user: PostUser):
     with tracer.start_span("add_user_request", child_of=get_current_span()) as span:
         with span_in_context(span):
             new_user = await user_service.create_user(user)
-            return new_user
+            return mapper.mapping_model_schema(new_user)
 
 
 @router.delete('/{user_id}', status_code=status.HTTP_204_NO_CONTENT)

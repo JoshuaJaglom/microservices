@@ -22,6 +22,8 @@ jobs:
     - name: Run the test Docker image
       run: |
         cd  authorization_service
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         python3 -m pytest test_auth.py
   
   load-image:

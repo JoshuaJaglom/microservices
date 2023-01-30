@@ -1,7 +1,7 @@
 import requests
 import pytest
 import json
-from menu_service.schemas import PostProduct
+from menu_service import schemas
 
 
 @pytest.fixture
@@ -19,8 +19,9 @@ def api_gateway_url():
     final_url = f'http://localhost:{port}/{api_version}'
     return final_url
 
+
 @pytest.mark.parametrize('endpoint, schemas, body', [
-    ('menu/add', PostProduct, PostProduct(
+    ('menu/add', schemas.PostProduct, schemas.PostProduct(
         product='Mega name for film',
         price=1000)),
 ])

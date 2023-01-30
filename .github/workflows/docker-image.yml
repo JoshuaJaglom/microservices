@@ -17,10 +17,11 @@ jobs:
     - name: Build the test Docker image
       run: | 
         cd  authorization_service
-        docker build . --file Dockerfile.test -t test-auth-service
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run the test Docker image
       run: |
-        docker run test-auth-service
+        python3 -m pytest test_auth.py
   
   load-image:
 

@@ -11,3 +11,12 @@ class PostUser(BaseModel):
 
 class User(PostUser):
     user_id: uuid.UUID
+
+
+class PostProduct(BaseModel):
+    product: str
+    price: int
+
+
+class Product(PostProduct):
+    product_id: uuid.UUID

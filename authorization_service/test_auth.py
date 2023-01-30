@@ -1,7 +1,7 @@
 import requests
 import pytest
 import json
-from menu_service import schemas
+import schemas
 
 
 @pytest.fixture

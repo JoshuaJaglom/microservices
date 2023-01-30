@@ -1,22 +1,34 @@
-import unittest
-from mongoengine import connect, disconnect
-import httpx
+import requests
 import pytest
-from main import app
-from httpx import AsyncClient
+import json
+from menu_service.schemas import PostProduct
 
 
-class TestEndpoints(unittest.TestCase):
+@pytest.fixture
+def service_url():
+    port = '8001'
+    api_version = 'v1'
+    final_url = f'http://localhost:{port}/{api_version}'
+    return final_url
 
-    @classmethod
-    def setUpClass(cls):
-        connect('mongoenginetest', host='mongomock://localhost')
 
-    @classmethod
-    def tearDownClass(cls):
-        disconnect()
+@pytest.fixture
+def api_gateway_url():
+    port = '8080'
+    api_version = 'v1'
+    final_url = f'http://localhost:{port}/{api_version}'
+    return final_url
 
-    async def test_get_all(self):
-        async with AsyncClient(app=app, base_url="http://test") as ac:
-            resource = await ac.get('/v11/users')
-            assert resource.status_code == 200
+@pytest.mark.parametrize('endpoint, schemas, body', [
+    ('menu/add', PostProduct, PostProduct(
+        product='Mega name for film',
+        price=1000)),
+])
+def test_post_product(endpoint, schemas, body, service_url):
+    response = requests.post(
+        f'{service_url}/{endpoint}',
+        json=body.dict()
+    )
+    assert response.status_code == 201
+    data = json.loads(response.content.decode())
+    assert schemas.validate(data)

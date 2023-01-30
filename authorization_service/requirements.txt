@@ -8,3 +8,12 @@ prometheus_client
 python-jose[cryptography]
 passlib
 python-multipart
+requests
+httpx
+pytest
+mongomock
+pytest-asyncio
+anyio
+requests
+pytest
+pydantic
